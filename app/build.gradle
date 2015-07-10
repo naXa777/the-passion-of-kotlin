@@ -21,14 +21,31 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
 }
 
 dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.android.support:recyclerview-v7:22.2.0'
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
+    // kotlin support
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile 'com.github.yoavst:androidKotlin:1.5.1'
+
+    compile 'de.greenrobot:eventbus:3.0.0-beta1'
+
+    // robospice + retrofit
+    compile('com.octo.android.robospice:robospice-retrofit:1.4.14') {
+        exclude module: 'gson'
+    }
+    compile 'com.google.code.gson:gson:2.3'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.4.0'
+    compile 'com.squareup.okhttp:okhttp:2.4.0'
 }
+
 buildscript {
     ext.kotlin_version = '0.12.613'
     repositories {
@@ -36,8 +53,13 @@ buildscript {
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
     }
 }
+
 repositories {
     mavenCentral()
+    maven {
+        url "https://jitpack.io"
+    }
 }
