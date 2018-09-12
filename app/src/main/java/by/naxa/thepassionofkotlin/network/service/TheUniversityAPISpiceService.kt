@@ -20,7 +20,7 @@ class TheUniversityAPISpiceService : RetrofitGsonSpiceService() {
     override fun createRestAdapterBuilder(): RestAdapter.Builder? {
         val builder = super.createRestAdapterBuilder()
         builder.setLogLevel(RestAdapter.LogLevel.FULL)
-        return builder;
+        return builder
     }
 
     override fun onCreate() {

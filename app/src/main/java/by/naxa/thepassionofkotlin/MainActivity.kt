@@ -12,7 +12,6 @@ import by.naxa.thepassionofkotlin.network.request.GetListStudentSpiceRequest
 import by.naxa.thepassionofkotlin.network.service.TheUniversityAPISpiceService
 import com.octo.android.robospice.SpiceManager
 import kotlinx.android.synthetic.main.activity_main.*
-import org.greenrobot.eventbus.EventBus
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.verbose
 
@@ -20,7 +19,7 @@ public class MainActivity : AppCompatActivity(), AnkoLogger {
 
     val mSpiceMgr : SpiceManager = SpiceManager(TheUniversityAPISpiceService::class.java)
 
-    var mAdapter = StudentRecyclerAdapter();
+    var mAdapter = StudentRecyclerAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,18 +48,6 @@ public class MainActivity : AppCompatActivity(), AnkoLogger {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onResume() {
-        super.onResume()
-        EventBus.getDefault().register(this)
-        verbose("::onResume()")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        EventBus.getDefault().unregister(this)
-        verbose("::onPause()")
-    }
-
     override fun onStart() {
         super.onStart()
         mSpiceMgr.start(this)
@@ -79,17 +66,17 @@ public class MainActivity : AppCompatActivity(), AnkoLogger {
         setSupportActionBar(toolbar)
         toolbar.setTitle("Students")
 
-        mainRecyclerView.setLayoutManager(createLayoutManager());
+        mainRecyclerView.setLayoutManager(createLayoutManager())
         mainRecyclerView.setAdapter(mAdapter)
         mainSwipeRefreshLayout.setOnRefreshListener{
             refreshContent()
-            mainSwipeRefreshLayout.setRefreshing(false);
+            mainSwipeRefreshLayout.setRefreshing(false)
         }
     }
 
     private fun refreshContent() {
         mAdapter = StudentRecyclerAdapter(GetListStudentSpiceRequest().loadDataFromNetwork().results as MutableList<Student>)
-        mainRecyclerView.setAdapter(mAdapter);
+        mainRecyclerView.setAdapter(mAdapter)
     }
 
     private fun createLayoutManager(): RecyclerView.LayoutManager {
