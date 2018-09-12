@@ -10,7 +10,7 @@ import com.octo.android.robospice.request.retrofit.RetrofitSpiceRequest
  */
 class GetStudentSpiceRequest(val id : Long) :
         RetrofitSpiceRequest<Student, TheUniversityAPI.StudentAPI>(
-                javaClass<Student>(), javaClass<TheUniversityAPI.StudentAPI>()) {
+                Student::class.java, TheUniversityAPI.StudentAPI::class.java) {
 
     override fun loadDataFromNetwork(): Student? {
         return getService().get(id)

@@ -8,11 +8,11 @@ import com.octo.android.robospice.request.retrofit.RetrofitSpiceRequest
  * Created on 7/10/2015.
  * @author phomal
  */
-class GetListFacultySpiceRequest : RetrofitSpiceRequest<List<Faculty>, TheUniversityAPI.FacultyAPI>(
-        javaClass<List<Faculty>>(), javaClass<TheUniversityAPI.FacultyAPI>()) {
+class GetListFacultySpiceRequest : RetrofitSpiceRequest<Faculty.ResultList, TheUniversityAPI.FacultyAPI>(
+        Faculty.ResultList::class.java, TheUniversityAPI.FacultyAPI::class.java) {
 
-    override fun loadDataFromNetwork(): List<Faculty>? {
-        return getService().getList()
+    override fun loadDataFromNetwork(): Faculty.ResultList {
+        return Faculty.ResultList(getService().getList())
     }
 
 }

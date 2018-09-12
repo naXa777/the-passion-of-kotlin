@@ -18,14 +18,14 @@ class TheUniversityAPISpiceService : RetrofitGsonSpiceService() {
     }
 
     override fun createRestAdapterBuilder(): RestAdapter.Builder? {
-        val builder = super<RetrofitGsonSpiceService>.createRestAdapterBuilder()
+        val builder = super.createRestAdapterBuilder()
         builder.setLogLevel(RestAdapter.LogLevel.FULL)
         return builder;
     }
 
     override fun onCreate() {
-        super<RetrofitGsonSpiceService>.onCreate()
-        addRetrofitInterface(javaClass<TheUniversityAPI>())
+        super.onCreate()
+        addRetrofitInterface(TheUniversityAPI::class.java)
     }
 
     override fun createConverter(): Converter? {

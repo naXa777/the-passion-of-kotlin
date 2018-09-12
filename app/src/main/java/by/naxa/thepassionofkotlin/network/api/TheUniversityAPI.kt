@@ -12,18 +12,18 @@ import retrofit.http.Path
 interface TheUniversityAPI {
 
     interface FacultyAPI {
-        GET("/faculty/list/rest")
+        @GET("/faculty/list/rest")
         fun getList(): List<Faculty>
 
-        GET("/faculty/{id}/rest")
+        @GET("/faculty/{id}/rest")
         fun get(@Path("id") id : Long): Faculty
     }
 
     interface StudentAPI {
-        GET("/student/list/rest")
+        @GET("/student/list/rest")
         fun getList(): List<Student>
 
-        GET("/student/{id}/rest")
+        @GET("/student/{id}/rest")
         fun get(@Path("id") id : Long): Student
     }
 

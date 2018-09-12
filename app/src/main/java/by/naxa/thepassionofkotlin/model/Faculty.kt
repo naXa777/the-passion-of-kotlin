@@ -14,4 +14,6 @@ public data class Faculty(@Expose @SerializedName("id") val gId: Long,
 
     var students: List<Student> = ArrayList()
 
+    class ResultList(val results: List<Faculty>? = null)
+
 }

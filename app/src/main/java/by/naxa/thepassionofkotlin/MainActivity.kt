@@ -11,24 +11,22 @@ import by.naxa.thepassionofkotlin.model.Student
 import by.naxa.thepassionofkotlin.network.request.GetListStudentSpiceRequest
 import by.naxa.thepassionofkotlin.network.service.TheUniversityAPISpiceService
 import com.octo.android.robospice.SpiceManager
-import com.yoavst.kotlin.v
-import de.greenrobot.event.EventBus
-import kotlinx.android.synthetic.activity_main.mainRecyclerView
-import kotlinx.android.synthetic.activity_main.mainSwipeRefreshLayout
-import kotlinx.android.synthetic.activity_main.toolbar
-import kotlin.properties.Delegates
+import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.EventBus
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.verbose
 
-public class MainActivity : AppCompatActivity() {
+public class MainActivity : AppCompatActivity(), AnkoLogger {
 
-    val mSpiceMgr : SpiceManager = SpiceManager(javaClass<TheUniversityAPISpiceService>())
+    val mSpiceMgr : SpiceManager = SpiceManager(TheUniversityAPISpiceService::class.java)
 
     var mAdapter = StudentRecyclerAdapter();
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super<AppCompatActivity>.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setUp()
-        v("::onCreate()")
+        verbose("::onCreate()")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -52,24 +50,24 @@ public class MainActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        super<AppCompatActivity>.onResume()
+        super.onResume()
         EventBus.getDefault().register(this)
-        v("::onResume()")
+        verbose("::onResume()")
     }
 
     override fun onPause() {
-        super<AppCompatActivity>.onPause()
+        super.onPause()
         EventBus.getDefault().unregister(this)
-        v("::onPause()")
+        verbose("::onPause()")
     }
 
     override fun onStart() {
-        super<AppCompatActivity>.onStart()
+        super.onStart()
         mSpiceMgr.start(this)
     }
 
     override fun onStop() {
-        super<AppCompatActivity>.onStop()
+        super.onStop()
         mSpiceMgr.shouldStop()
     }
 
@@ -90,7 +88,7 @@ public class MainActivity : AppCompatActivity() {
     }
 
     private fun refreshContent() {
-        mAdapter = StudentRecyclerAdapter(GetListStudentSpiceRequest().loadDataFromNetwork())
+        mAdapter = StudentRecyclerAdapter(GetListStudentSpiceRequest().loadDataFromNetwork().results as MutableList<Student>)
         mainRecyclerView.setAdapter(mAdapter);
     }
 

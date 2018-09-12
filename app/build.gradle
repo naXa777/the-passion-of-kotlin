@@ -1,14 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "23.0.0 rc2"
+    compileSdkVersion 27
+    buildToolsVersion '28.0.2'
 
     defaultConfig {
         applicationId "by.naxa.thepassionofkotlin"
         minSdkVersion 15
-        targetSdkVersion 22
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
     }
@@ -28,26 +29,27 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:22.2.0'
-    compile 'com.android.support:recyclerview-v7:22.2.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
 
     // kotlin support
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile 'com.github.yoavst:androidKotlin:1.5.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'org.jetbrains.anko:anko:0.10.4'
+    implementation 'org.jetbrains.anko:anko-commons:0.10.4'
 
-    compile 'de.greenrobot:eventbus:3.0.0-beta1'
+    implementation 'org.greenrobot:eventbus:3.1.1'
 
     // robospice + retrofit
-    compile('com.octo.android.robospice:robospice-retrofit:1.4.14') {
+    implementation('com.octo.android.robospice:robospice-retrofit:1.4.14') {
         exclude module: 'gson'
     }
-    compile 'com.google.code.gson:gson:2.3'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.4.0'
-    compile 'com.squareup.okhttp:okhttp:2.4.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.okhttp:okhttp-urlconnection:2.4.0'
+    implementation 'com.squareup.okhttp:okhttp:2.4.0'
 }
 
 buildscript {
-    ext.kotlin_version = '0.12.613'
+    ext.kotlin_version = '1.2.61'
     repositories {
         mavenCentral()
     }
@@ -58,6 +60,7 @@ buildscript {
 }
 
 repositories {
+    google()
     mavenCentral()
     maven {
         url "https://jitpack.io"

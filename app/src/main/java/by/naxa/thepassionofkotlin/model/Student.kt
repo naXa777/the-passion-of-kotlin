@@ -18,4 +18,6 @@ public data class Student(@Expose @SerializedName("id") val gId: Long,
 
     @Expose var rates: List<Int> = ArrayList()
 
+    class ResultList(val results: List<Student>)
+
 }

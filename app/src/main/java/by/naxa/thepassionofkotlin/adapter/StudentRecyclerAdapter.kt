@@ -9,7 +9,9 @@ import by.naxa.thepassionofkotlin.model.Student
  * Created on 7/10/2015.
  * @author phomal
  */
-public data class StudentRecyclerAdapter() : RecyclerView.Adapter<StudentViewHolder>() {
+public data class StudentRecyclerAdapter(
+        private var mData: MutableList<Student> = arrayListOf()
+) : RecyclerView.Adapter<StudentViewHolder>() {
 
     public interface OnClickEvent {
         /**
@@ -20,18 +22,12 @@ public data class StudentRecyclerAdapter() : RecyclerView.Adapter<StudentViewHol
         public fun onClick(v: View, position: Int)
     }
 
-    private var mData: MutableList<Student> = arrayListOf<Student>();
     private var mOnClickEvent: OnClickEvent? = null
     private var mRecyclerView: RecyclerView? = null
 
-    public constructor(list : List<Student>?) : this() {
-        if (list != null)
-            mData.addAll(list)
-    }
+    override fun getItemCount(): Int = mData.size
 
-    override fun getItemCount(): Int = mData.size()
-
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): StudentViewHolder? {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
         throw UnsupportedOperationException()
     }
 
