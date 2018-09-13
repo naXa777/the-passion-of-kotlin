@@ -14,10 +14,13 @@ import com.octo.android.robospice.SpiceManager
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.verbose
+import android.widget.Toast
+import com.octo.android.robospice.persistence.exception.SpiceException
+import com.octo.android.robospice.request.listener.RequestListener
 
 public class MainActivity : AppCompatActivity(), AnkoLogger {
 
-    val mSpiceMgr : SpiceManager = SpiceManager(TheUniversityAPISpiceService::class.java)
+    private val mSpiceMgr : SpiceManager = SpiceManager(TheUniversityAPISpiceService::class.java)
 
     var mAdapter = StudentRecyclerAdapter()
 
@@ -64,19 +67,34 @@ public class MainActivity : AppCompatActivity(), AnkoLogger {
 
     private fun setUp() {
         setSupportActionBar(toolbar)
-        toolbar.setTitle("Students")
+        toolbar.title = "Students"
 
-        mainRecyclerView.setLayoutManager(createLayoutManager())
-        mainRecyclerView.setAdapter(mAdapter)
+        mainRecyclerView.layoutManager = createLayoutManager()
+        mainRecyclerView.adapter = mAdapter
         mainSwipeRefreshLayout.setOnRefreshListener{
             refreshContent()
-            mainSwipeRefreshLayout.setRefreshing(false)
         }
     }
 
     private fun refreshContent() {
-        mAdapter = StudentRecyclerAdapter(GetListStudentSpiceRequest().loadDataFromNetwork().results as MutableList<Student>)
-        mainRecyclerView.setAdapter(mAdapter)
+        getServiceSpiceManager().execute(GetListStudentSpiceRequest(), spiceRequestListener)
+    }
+
+    private val spiceRequestListener = StudentSpiceRequestListener()
+
+    private inner class StudentSpiceRequestListener : RequestListener<Student.ResultList> {
+
+        override fun onRequestFailure(spiceException: SpiceException) {
+            mainSwipeRefreshLayout.isRefreshing = false
+            Toast.makeText(this@MainActivity, getString(R.string.connection_failed),
+                    Toast.LENGTH_LONG).show()
+        }
+
+        override fun onRequestSuccess(result: Student.ResultList) {
+            mainSwipeRefreshLayout.isRefreshing = false
+            val adapter = StudentRecyclerAdapter(result.results as MutableList<Student>)
+            adapter.notifyDataSetChanged()
+        }
     }
 
     private fun createLayoutManager(): RecyclerView.LayoutManager {

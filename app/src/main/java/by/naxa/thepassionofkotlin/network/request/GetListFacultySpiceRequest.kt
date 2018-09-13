@@ -12,7 +12,7 @@ class GetListFacultySpiceRequest : RetrofitSpiceRequest<Faculty.ResultList, TheU
         Faculty.ResultList::class.java, TheUniversityAPI.FacultyAPI::class.java) {
 
     override fun loadDataFromNetwork(): Faculty.ResultList {
-        return Faculty.ResultList(getService().getList())
+        return Faculty.ResultList(service.getList())
     }
 
 }

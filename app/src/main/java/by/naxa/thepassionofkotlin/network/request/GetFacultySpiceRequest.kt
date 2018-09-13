@@ -13,7 +13,7 @@ class GetFacultySpiceRequest(val id : Long) :
                 Faculty::class.java, TheUniversityAPI.FacultyAPI::class.java) {
 
     override fun loadDataFromNetwork(): Faculty? {
-        return getService().get(id)
+        return service.get(id)
     }
 
 }
